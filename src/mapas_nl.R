@@ -1,16 +1,16 @@
 library(pacman)
-p_load(tidyverse, sf, janitor, classInt, Hmisc, cowplot, patchwork)
+p_load(tidyverse, sf, here,janitor, classInt, Hmisc, cowplot, patchwork)
 
 
-X11(type="cairo")
+# X11(type="cairo")
 
 
-secc <- st_read("~/Dropbox (Selva)/Ciencia de datos/Consultoría Estadística/Recursos/Externos/INE/SHP/2020/19 - Nuevo León/SECCION.shp",
+secc <- st_read(here("inp", "SHP", "SECCION.shp"),
                 stringsAsFactors = FALSE, quiet = TRUE) %>%
   st_transform(4326)%>% 
   clean_names()
 
-mapa_mun <- st_read("~/Dropbox (Selva)/Ciencia de datos/Consultoría Estadística/Recursos/Externos/INE/SHP/2020/19 - Nuevo León/MUNICIPIO.shp",
+mapa_mun <- st_read(here("inp", "SHP", "MUNICIPIO.shp"),
                     stringsAsFactors = FALSE, quiet = TRUE) %>%
   st_transform(4326)%>% 
   clean_names()
@@ -33,7 +33,7 @@ nombres <- nombres %>%
         nombre=gsub("GARZA GARCIA", "", nombre),
         nombre=gsub("GRAL.", "", nombre))
 
-data <- read_csv("~/Downloads/eceg_2020_csv/conjunto_de_datos/INE_SECCION_2020.csv") %>% 
+data <- read_csv(here("inp", "eceg", "INE_SECCION_2020.csv")) %>% 
         clean_names() %>% 
         filter(entidad==19)
 
